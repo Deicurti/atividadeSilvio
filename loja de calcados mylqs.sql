@@ -83,3 +83,60 @@ INSERT INTO Funcionarios (nome_funcionario, cargo, salario, data_contratacao) VA
 ('Pedro Silva', 'Vendedor', 2500.00, '2023-01-10'),
 ('Ana Pereira', 'Gerente', 4500.00, '2022-11-05'),
 ('Lucas Santos', 'Caixa', 1800.00, '2024-06-01');
+
+-- Exibe todos os registros da tabela Produtos
+SELECT * FROM Produtos;
+
+-- Exibe todos os registros da tabela Fornecedores
+SELECT * FROM Fornecedores;
+
+-- Exibe todos os registros da tabela Clientes
+SELECT * FROM Clientes;
+
+-- Exibe todos os registros da tabela Vendas
+SELECT * FROM Vendas;
+
+-- Exibe todos os registros da tabela Funcionarios
+SELECT * FROM Funcionarios;
+
+-- Filtra vendas entre uma data de início e uma data de término
+SELECT * FROM Vendas
+WHERE data_venda BETWEEN '2024-08-01' AND '2024-08-31';
+
+-- Filtra funcionários contratados entre duas datas
+SELECT * FROM Funcionarios
+WHERE data_contratacao BETWEEN '2023-01-01' AND '2024-12-31';
+
+-- Filtra produtos com preço acima de R$150,00
+SELECT * FROM Produtos
+WHERE preco > 150.00;
+
+-- Filtra vendas com total acima de R$300,00
+SELECT * FROM Vendas
+WHERE total > 300.00;
+-- Soma a quantidade e exibe produtos cujo estoque total é superior a 100
+SELECT nome_produto, SUM(quantidade_estoque) AS estoque_total
+FROM Produtos
+GROUP BY nome_produto
+HAVING estoque_total > 100;
+
+-- Exibe as vendas com detalhes de clientes e produtos
+SELECT Vendas.id_venda, Clientes.nome_cliente, Produtos.nome_produto, Vendas.data_venda, Vendas.quantidade, Vendas.total
+FROM Vendas
+JOIN Clientes ON Vendas.id_cliente = Clientes.id_cliente
+JOIN Produtos ON Vendas.id_produto = Produtos.id_produto
+WHERE Vendas.data_venda BETWEEN '2024-08-01' AND '2024-08-31';
+
+-- Filtra produtos com fornecedores específicos
+SELECT Produtos.nome_produto, Fornecedores.nome_fornecedor
+FROM Produtos
+JOIN Fornecedores ON Produtos.id_fornecedor = Fornecedores.id_fornecedor
+WHERE Fornecedores.nome_fornecedor = 'Fornecedora A';
+
+-- Filtra clientes cujos nomes contêm "Sil"
+SELECT * FROM Clientes
+WHERE nome_cliente LIKE '%Sil%';
+
+-- Filtra produtos com a palavra "Esportivo"
+SELECT * FROM Produtos
+WHERE nome_produto LIKE '%Esportivo%';
